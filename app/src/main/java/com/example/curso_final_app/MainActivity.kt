@@ -8,6 +8,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.curso_final_app.databinding.ActivityMainBinding
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 
 class MainActivity : AppCompatActivity() {
 
@@ -32,4 +33,14 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
+
+    override fun onStart() {
+        super.onStart()
+
+        FirebaseCrashlytics.getInstance().log("Entré a MainActivity JDR")
+        FirebaseCrashlytics.getInstance().setUserId("usuarioJDR")
+        FirebaseCrashlytics.getInstance().recordException(Exception("Error manual de prueba JDR"))
+        // throw RuntimeException("Test Crash") // Force a crash
+    }
+
 }
