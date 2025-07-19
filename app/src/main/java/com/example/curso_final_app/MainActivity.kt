@@ -1,6 +1,7 @@
 package com.example.curso_final_app
 
 import android.os.Bundle
+import android.util.Log
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -8,9 +9,12 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.curso_final_app.databinding.ActivityMainBinding
+import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.example.curso_final_app.util.RemoteConfigManager
 
 class MainActivity : AppCompatActivity() {
 
+    private  val TAG = MainActivity::class.java.simpleName
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,5 +35,21 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+    }
+    override fun onStart(){
+        super.onStart()
+        FirebaseCrashlytics.getInstance().log("Entre a MainActivity")
+        FirebaseCrashlytics.getInstance().setUserId("RinconDelLimon")
+        FirebaseCrashlytics.getInstance().recordException(Exception("Error manual de prueba de carmen"))
+      //  throw RuntimeException("TestCrash2")
+        RemoteConfigManager.fetchAndActivate { success ->
+                if (success) {
+                    val label_carmen = RemoteConfigManager.getString("label_carmen")
+                   //val enabled = RemoteConfigManager.getBoolean("feature_enabled")
+                    Log.d(TAG, "Label: $label_carmen")
+                } else {
+                    Log.e("MainActivity", "Error al cargar Remote Config")
+                }
+            }
     }
 }

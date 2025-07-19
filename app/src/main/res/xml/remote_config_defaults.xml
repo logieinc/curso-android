@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?><defaults>
+  <entry>
+    <key>label_carmen</key>
+    <value>label de carmen</value>
+  </entry>
+  <entry>
+    <key>label</key>
+    <value>label prueba 2</value>
+  </entry>
+</defaults>
