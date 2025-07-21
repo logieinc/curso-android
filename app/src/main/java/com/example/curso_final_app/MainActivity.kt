@@ -1,15 +1,23 @@
 package com.example.curso_final_app
 
 import android.os.Bundle
+import android.util.Log
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.curso_final_app.data.repository.PostRepository
 import com.example.curso_final_app.databinding.ActivityMainBinding
+import com.example.curso_final_app.util.RemoteConfigManager
+import com.google.firebase.crashlytics.FirebaseCrashlytics
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
+
+    private val TAG = MainActivity::class.java.simpleName
 
     private lateinit var binding: ActivityMainBinding
 
@@ -31,5 +39,33 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        FirebaseCrashlytics.getInstance().log("DRV - Entré en MainActivity")
+        FirebaseCrashlytics.getInstance().setUserId("DRV")
+        FirebaseCrashlytics.getInstance().recordException(Exception("DRV - Error manual de prueba"))
+
+        //throw RuntimeException("DRV - Test Crash") // Force a crash
+
+        RemoteConfigManager.fetchAndActivate { success ->
+            if (success) {
+                val label = RemoteConfigManager.getString("label")
+                //  val enabled = RemoteConfigManager.getBoolean("feature_enabled")
+                Log.d(TAG, "Mensaje: $label")
+            } else {
+                Log.e(TAG, "Error al cargar Remote Config")
+            }
+        }
+
+        // Para revisar tareas asíncronas
+        lifecycleScope.launch {
+            val repository = PostRepository()
+            val posts = repository.fetchPosts()
+            posts.forEach {
+                Log.d("MainActivity", "Post: ${it.title}")
+            }
+        }
     }
 }
