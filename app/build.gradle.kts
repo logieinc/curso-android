@@ -63,6 +63,8 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    // dependencias propias de kotlin
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
 
     // Import  Firebase dependencies
     implementation(platform("com.google.firebase:firebase-bom:33.16.0"))

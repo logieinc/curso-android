@@ -4,6 +4,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import com.example.curso_final_app.BuildConfig
 
 object RetrofitClient {
     private val okHttpClient = OkHttpClient.Builder()
