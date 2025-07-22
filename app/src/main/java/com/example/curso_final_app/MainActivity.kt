@@ -13,7 +13,9 @@ import com.example.curso_final_app.data.repository.PostRepository
 import com.example.curso_final_app.databinding.ActivityMainBinding
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.example.curso_final_app.util.RemoteConfigManager
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
 
@@ -33,7 +35,8 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
+               // R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
+                R.id.navigation_post, R.id.navigation_dashboard, R.id.navigation_notifications
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -56,7 +59,9 @@ class MainActivity : AppCompatActivity() {
         }
         lifecycleScope.launch {
             val repository = PostRepository()
-            val posts = repository.fetchPosts()
+            val posts = withContext(Dispatchers.IO) {
+                repository.fetchPosts()
+            }
             posts.forEach {
                 Log.d("MainActivity", "Post: ${it.title}")
             }

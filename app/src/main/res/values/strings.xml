@@ -7,4 +7,6 @@
     <string name="post_body">BODY</string>
     <string name="post_btn_edit">EDIT</string>
     <string name="post_btn_delete">DELETE</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
