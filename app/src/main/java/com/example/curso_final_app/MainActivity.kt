@@ -4,13 +4,16 @@ import android.os.Bundle
 import android.util.Log
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.curso_final_app.data.repository.PostRepository
 import com.example.curso_final_app.databinding.ActivityMainBinding
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.example.curso_final_app.util.RemoteConfigManager
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -50,6 +53,13 @@ class MainActivity : AppCompatActivity() {
                 } else {
                     Log.e("MainActivity", "Error al cargar Remote Config")
                 }
+        }
+        lifecycleScope.launch {
+            val repository = PostRepository()
+            val posts = repository.fetchPosts()
+            posts.forEach {
+                Log.d("MainActivity", "Post: ${it.title}")
             }
+        }
     }
 }
