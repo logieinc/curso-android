@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
+                R.id.navigation_post, R.id.navigation_dashboard, R.id.navigation_notifications
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -61,7 +61,9 @@ class MainActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             val repository = PostRepository()
-            val posts = repository.fetchPosts()
+            val posts = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+                repository.fetchPosts()
+            }
             posts.forEach {
                 Log.d("MainActivity", "Post: ${it.title}")
             }
