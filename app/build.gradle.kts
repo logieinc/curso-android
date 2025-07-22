@@ -23,7 +23,14 @@ android {
     }
 
     buildTypes {
+
+
+        debug {
+            buildConfigField ("String", "BASE_URL", "\"https://jsonplaceholder.typicode.com/\"")
+        }
+
         release {
+            buildConfigField ("String", "BASE_URL", "\"https://jsonplaceholder.typicode.com/\"")
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -40,6 +47,7 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 }
 
@@ -55,6 +63,17 @@ dependencies {
     implementation("com.google.firebase:firebase-crashlytics")
     implementation("com.google.firebase:firebase-config")
     implementation("com.google.firebase:firebase-messaging")
+
+
+    // implemantacion retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
+    implementation("com.squareup.retrofit2:converter-scalars:2.9.0")
+
+    // dependencias propias de kotlin
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
+
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

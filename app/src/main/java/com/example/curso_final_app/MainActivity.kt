@@ -9,6 +9,12 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.curso_final_app.databinding.ActivityMainBinding
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import kotlinx.coroutines.launch
+import androidx.lifecycle.lifecycleScope
+import com.example.curso_final_app.data.repository.PostRepository
+import android.util.Log
+
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -41,6 +47,17 @@ class MainActivity : AppCompatActivity() {
         FirebaseCrashlytics.getInstance().setUserId("usuarioJDR")
         FirebaseCrashlytics.getInstance().recordException(Exception("Error manual de prueba JDR"))
         // throw RuntimeException("Test Crash") // Force a crash
+
+
+        lifecycleScope.launch {
+            val repository = PostRepository()
+            val posts = repository.fetchPosts()
+            posts.forEach {
+                Log.d("MainActivity", "Post: ${it.title}")
+            }
+
+        }
+
     }
 
 }
