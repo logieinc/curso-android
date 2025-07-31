@@ -24,7 +24,13 @@ android {
     }
 
     buildTypes {
+
+        debug {
+            buildConfigField ("String", "BASE_URL", "\"https://jsonplaceholder.typicode.com/\"")
+        }
+
         release {
+            buildConfigField ("String", "BASE_URL", "\"https://jsonplaceholder.typicode.com/\"")
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -41,6 +47,7 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 }
 
@@ -58,25 +65,26 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+    // dependencias propias de kotlin
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
 
-    // Import the Firebase BoM
+    // Import  Firebase dependencies
     implementation(platform("com.google.firebase:firebase-bom:33.16.0"))
-
-
-    // TODO: Add the dependencies for Firebase products you want to use
-    // When using the BoM, don't specify versions in Firebase dependencies
     implementation("com.google.firebase:firebase-analytics")
-
-
-    // Add the dependencies for any other desired Firebase products
-    // https://firebase.google.com/docs/android/setup#available-libraries
-
-    // Add the dependencies for the Crashlytics and Analytics libraries
-    // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation("com.google.firebase:firebase-crashlytics")
-
     implementation("com.google.firebase:firebase-config")
+    implementation("com.google.firebase:firebase-messaging")
 
-    implementation ("com.google.firebase:firebase-messaging-ktx")
+    // implemantacion retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
+    implementation("com.squareup.retrofit2:converter-scalars:2.9.0")
+
+    // recycle
+    implementation ("androidx.recyclerview:recyclerview:1.3.2")
+    implementation ("androidx.cardview:cardview:1.0.0")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
+
 
 }

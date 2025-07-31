@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><defaults>
-    <entry>
-        <key>label</key>
-        <value>label prueba</value>
-    </entry>
+  <entry>
+    <key>label</key>
+    <value>label prueba</value>
+  </entry>
 </defaults>

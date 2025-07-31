@@ -1,17 +1,28 @@
 package com.example.curso_final_app
 
 import android.os.Bundle
+import android.util.Log
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.curso_final_app.data.repository.PostRepository
 import com.example.curso_final_app.databinding.ActivityMainBinding
+
 import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.ktx.Firebase
 
+import com.example.curso_final_app.util.RemoteConfigManager
+import com.google.firebase.crashlytics.FirebaseCrashlytics
+import kotlinx.coroutines.launch
+
+
 class MainActivity : AppCompatActivity() {
+
+    private val TAG = MainActivity::class.java.simpleName
 
     private lateinit var binding: ActivityMainBinding
 
@@ -28,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
+                R.id.navigation_post, R.id.navigation_dashboard, R.id.navigation_notifications
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -37,11 +48,35 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        //throw RuntimeException("Test Crash Juri") // Force a crash
 
-        Firebase.crashlytics.log("Entré a MainActivity")
-        Firebase.crashlytics.setUserId("juri")
-        Firebase.crashlytics.recordException(Exception("Error manual de juri"))
+
+        FirebaseCrashlytics.getInstance().log("Entré a MainActivity cbr")
+        FirebaseCrashlytics.getInstance().setUserId("usuarioCbr")
+        FirebaseCrashlytics.getInstance().recordException(Exception("Error manual de prueba cbr"))
+       // throw RuntimeException("Test Crash") // Force a crash
+
+        RemoteConfigManager.fetchAndActivate { success ->
+            if (success) {
+                val label = RemoteConfigManager.getString("label")
+                // val enabled = RemoteConfigManager.getBoolean("feature_enabled")
+                Log.d(TAG, "Label: $label")
+            } else {
+                Log.d(TAG, "Error al cargar Remote Config")
+            }
+        }
+
+        lifecycleScope.launch {
+            val repository = PostRepository()
+            val posts = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+                repository.fetchPosts()
+            }
+            posts.forEach {
+                Log.d("MainActivity", "Post: ${it.title}")
+            }
+
         }
 
     }
+}
+
+
