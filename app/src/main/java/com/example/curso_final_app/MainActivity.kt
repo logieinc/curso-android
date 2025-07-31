@@ -8,6 +8,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.curso_final_app.databinding.ActivityMainBinding
+import com.google.firebase.crashlytics.ktx.crashlytics
+import com.google.firebase.ktx.Firebase
 
 class MainActivity : AppCompatActivity() {
 
@@ -32,4 +34,14 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
-}
+
+    override fun onStart() {
+        super.onStart()
+        //throw RuntimeException("Test Crash Juri") // Force a crash
+
+        Firebase.crashlytics.log("Entré a MainActivity")
+        Firebase.crashlytics.setUserId("juri")
+        Firebase.crashlytics.recordException(Exception("Error manual de juri"))
+        }
+
+    }

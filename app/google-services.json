@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "549280478763",
+    "project_id": "curso-app-final",
+    "storage_bucket": "curso-app-final.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:549280478763:android:ed57f0938210229d355c6e",
+        "android_client_info": {
+          "package_name": "com.example.curso_final_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBaqmFQTBdMGSV5dAJK1vf_rMLTD0kuIbE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
