@@ -59,6 +59,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        /* PRUEBA INICIAL IMPLEMENTACION RETROFIT
         lifecycleScope.launch {
             val repository = PostRepository()
             val posts = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
@@ -69,6 +70,8 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
+
+         */
 
     }
 }

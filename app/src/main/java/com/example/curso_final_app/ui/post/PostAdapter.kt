@@ -39,5 +39,9 @@ class PostAdapter (
 
     }
 
+    fun updateList(newList: List<Post>) {
+        posts = newList
+        notifyDataSetChanged()
+    }
 
 }
